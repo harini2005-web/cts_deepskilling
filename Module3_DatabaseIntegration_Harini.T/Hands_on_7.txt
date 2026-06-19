@@ -1,0 +1,75 @@
+HANDS-ON 7
+
+Task 1
+
+Question 92
+alembic init migrations
+
+Question 93
+Edit alembic.ini
+
+sqlalchemy.url = mysql+mysqlconnector://root:Harini#2005@localhost/college_db_orm
+
+Question 94
+Edit migrations/env.py
+
+from models import Base
+
+target_metadata = Base.metadata
+
+Question 95
+alembic revision --autogenerate -m "initial schema"
+
+Question 96
+Inspect generated migration file:
+migrations/versions/<revision>.py
+
+Confirm:
+- upgrade()
+- downgrade()
+
+Question 97
+alembic upgrade head
+
+alembic current
+
+
+Task 2
+
+Question 98
+Add to Student model:
+
+from sqlalchemy import Boolean
+
+is_active = Column(Boolean, default=True)
+
+Question 99
+alembic revision --autogenerate -m "add is_active to students"
+
+Question 100
+Inspect generated migration
+
+Confirm:
+- upgrade() adds is_active
+- downgrade() removes is_active
+
+Question 101
+alembic upgrade head
+
+Question 102
+
+class CourseSchedule(Base):
+    __tablename__ = "course_schedules"
+
+    schedule_id = Column(Integer, primary_key=True)
+    course_id = Column(Integer, ForeignKey("courses.course_id"))
+    day_of_week = Column(String(20))
+    start_time = Column(String(20))
+    end_time = Column(String(20))
+
+alembic revision --autogenerate -m "add course schedule"
+
+alembic upgrade head
+
+Question 103
+alembic history --verbose
